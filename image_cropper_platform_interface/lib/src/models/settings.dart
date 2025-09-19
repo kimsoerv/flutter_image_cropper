@@ -69,10 +69,6 @@ enum CropAspectRatioPreset implements CropAspectRatioPresetData {
   }
 }
 
-///
-/// Crop style options. There're two supported styles, rectangle and circle.
-/// These style will changes the shape of crop bounds, rectangle or circle bounds.
-///
 enum CropStyle {
   rectangle,
   circle;
@@ -87,9 +83,6 @@ enum CropStyle {
   }
 }
 
-///
-/// Supported image compression formats
-///
 enum ImageCompressFormat {
   jpg,
   png;
@@ -122,95 +115,37 @@ class CropAspectRatio {
           this.ratioY == other.ratioY;
 }
 
-///
-/// An abstract class encapsulates UI attributes for customization
-///
 abstract class PlatformUiSettings {
   Map<String, dynamic> toMap();
 }
 
-///
-/// A helper class provides properties that can be used to customize the cropper
-/// view on Android.
-///
-/// The properties is mapped to fields of `Ucrop.Options` class in Ucrop library.
-///
-/// See: <https://github.com/Yalantis/uCrop/blob/master/ucrop/src/main/java/com/yalantis/ucrop/UCrop.java#L260>
-///
 class AndroidUiSettings extends PlatformUiSettings {
-  /// desired text for Toolbar title
   final String? toolbarTitle;
-
-  /// desired color of the Toolbar
   final Color? toolbarColor;
-
-  /// desired color of status
-  @Deprecated(
-      "This property is deprecated and no longer in use. Please use 'statusBarLight' instead.")
+  @Deprecated("Use statusBarLight instead.")
   final Color? statusBarColor;
-
-  /// true for light status bar (dark icons), false for dark status bar (light icons)
   final bool? statusBarLight;
-
-  /// true for light navigation bar (dark icons), false for dark navigation bar (light icons)
   final bool? navBarLight;
-
-  /// desired color of Toolbar text and buttons (default is black)
   final Color? toolbarWidgetColor;
-
-  /// desired background color that should be applied to the root view
   final Color? backgroundColor;
-
-  /// desired resolved color of the active and selected widget and progress wheel middle line (default is darker orange)
   final Color? activeControlsWidgetColor;
-
-  /// desired color of dimmed area around the crop bounds
   final Color? dimmedLayerColor;
-
-  /// desired color of crop frame
   final Color? cropFrameColor;
-
-  /// desired color of crop grid/guidelines
   final Color? cropGridColor;
-
-  /// desired width of crop frame line in pixels
   final int? cropFrameStrokeWidth;
-
-  /// crop grid rows count
   final int? cropGridRowCount;
-
-  /// crop grid columns count
   final int? cropGridColumnCount;
-
-  /// desired width of crop grid lines in pixels
   final int? cropGridStrokeWidth;
-
-  /// set to true if you want to see a crop grid/guidelines on top of an image
   final bool? showCropGrid;
-
-  /// set to true if you want to lock the aspect ratio of crop bounds with a fixed value
-  /// (locked by default)
   final bool? lockAspectRatio;
-
-  /// set to true to hide the bottom controls (shown by default)
   final bool? hideBottomControls;
-
-  /// controls the style of crop bounds, it can be rectangle or
-  /// circle style (default is [CropStyle.rectangle]).
   final CropStyle cropStyle;
-
-  /// controls the list of aspect ratios in the crop menu view.
   final List<CropAspectRatioPresetData> aspectRatioPresets;
-
-  /// desired aspect ratio is applied (from the list of given aspect ratio presets)
-  /// when starting the cropper
   final CropAspectRatioPresetData? initAspectRatio;
 
   AndroidUiSettings({
     this.toolbarTitle,
     this.toolbarColor,
-    @Deprecated(
-        "This property is deprecated and no longer in use. Please use 'statusBarLight' instead.")
     this.statusBarColor,
     this.statusBarLight,
     this.navBarLight,
@@ -238,38 +173,39 @@ class AndroidUiSettings extends PlatformUiSettings {
     ],
   });
 
-@override
-Map<String, dynamic> toMap() => {
-      'android.toolbar_title': this.toolbarTitle,
-      'android.toolbar_color': this.toolbarColor?.value,
-      'android.status_bar_light': this.statusBarLight,
-      'android.nav_bar_light': this.navBarLight,
-      'android.toolbar_widget_color': this.toolbarWidgetColor?.value,
-      'android.background_color': this.backgroundColor?.value,
-      'android.active_controls_widget_color': this.activeControlsWidgetColor?.value,
-      'android.dimmed_layer_color': this.dimmedLayerColor?.value,
-      'android.crop_frame_color': this.cropFrameColor?.value,
-      'android.crop_grid_color': this.cropGridColor?.value,
-      'android.crop_frame_stroke_width': this.cropFrameStrokeWidth,
-      'android.crop_grid_row_count': this.cropGridRowCount,
-      'android.crop_grid_column_count': this.cropGridColumnCount,
-      'android.crop_grid_stroke_width': this.cropGridStrokeWidth,
-      'android.show_crop_grid': this.showCropGrid,
-      'android.lock_aspect_ratio': this.lockAspectRatio,
-      'android.hide_bottom_controls': this.hideBottomControls,
-      'android.init_aspect_ratio': this.initAspectRatio?.name,
-      'android.crop_style': this.cropStyle.name,
-      'android.aspect_ratio_presets': aspectRatioPresets
-          .map<Map<String, dynamic>>((item) => {
-                'name': item.name,
-                if (item.data != null)
-                  'data': {
-                    'ratio_x': item.data!.$1,
-                    'ratio_y': item.data!.$2,
-                  },
-              })
-          .toList(),
-    };
+  @override
+  Map<String, dynamic> toMap() => {
+        'android.toolbar_title': toolbarTitle,
+        'android.toolbar_color': toolbarColor?.value,
+        'android.status_bar_light': statusBarLight,
+        'android.nav_bar_light': navBarLight,
+        'android.toolbar_widget_color': toolbarWidgetColor?.value,
+        'android.background_color': backgroundColor?.value,
+        'android.active_controls_widget_color': activeControlsWidgetColor?.value,
+        'android.dimmed_layer_color': dimmedLayerColor?.value,
+        'android.crop_frame_color': cropFrameColor?.value,
+        'android.crop_grid_color': cropGridColor?.value,
+        'android.crop_frame_stroke_width': cropFrameStrokeWidth,
+        'android.crop_grid_row_count': cropGridRowCount,
+        'android.crop_grid_column_count': cropGridColumnCount,
+        'android.crop_grid_stroke_width': cropGridStrokeWidth,
+        'android.show_crop_grid': showCropGrid,
+        'android.lock_aspect_ratio': lockAspectRatio,
+        'android.hide_bottom_controls': hideBottomControls,
+        'android.init_aspect_ratio': initAspectRatio?.name,
+        'android.crop_style': cropStyle.name,
+        'android.aspect_ratio_presets': aspectRatioPresets
+            .map<Map<String, dynamic>>((item) => {
+                  'name': item.name,
+                  if (item.data != null)
+                    'data': {
+                      'ratio_x': item.data!.$1,
+                      'ratio_y': item.data!.$2,
+                    },
+                })
+            .toList(),
+      };
+}
 
 
 ///
